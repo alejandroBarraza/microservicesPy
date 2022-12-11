@@ -7,7 +7,7 @@ urlpatterns = [
     })),
     path('products/<str:pk>', ProductView.as_view({
         'get': 'retrieve',
-        'delete': 'delete',
+        'delete': 'destroy',
         'put' : 'update'
     }))
 ]
