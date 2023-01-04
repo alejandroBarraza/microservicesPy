@@ -1,13 +1,10 @@
 from django.urls import path
-from .views import ProductView
+from .views import ProductListCraeteAPIView, ProductRetrieveUpdateDestroyAPIView,userAPIView
+
 urlpatterns = [
-    path('products', ProductView.as_view({
-        'get': 'list',
-        'post': 'create'
-    })),
-    path('products/<str:pk>', ProductView.as_view({
-        'get': 'retrieve',
-        'delete': 'destroy',
-        'put' : 'update'
-    }))
-]
+        path('products/', ProductListCraeteAPIView.as_view(), name='product-list'),
+        path('products/<int:pk>', ProductRetrieveUpdateDestroyAPIView.as_view(), name='product-detail'),
+        path('user/', userAPIView.as_view(), name='user')
+    ]
+    
+
