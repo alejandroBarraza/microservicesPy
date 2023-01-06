@@ -12,16 +12,32 @@ class ProductListCraeteAPIView(generics.ListCreateAPIView):
     serializer_class = ProductSerializer
     lookup_field = 'pk'
 
-    def list(self, request):
+    def create(self, request):
         queryset = self.get_queryset()
         serializer = ProductSerializer(queryset, many=True)
-        publish()
+        publish('product_created',serializer.data)
         return Response(serializer.data)
+
+    # def perform_create(self, serializer):
+    #     publish()
+    #     serializer.save()
 
 class ProductRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     lookup_field = 'pk'
+
+    def update(self, request, pk):
+        queryset = self.get_queryset()
+        serializer = ProductSerializer(queryset, many=True)
+        publish('product_updated',serializer.data)
+        return Response(serializer.data)
+    
+    def destroy(self, __, pk):
+        queryset = self.get_queryset()
+        serializer = ProductSerializer(queryset, many=True)
+        publish('product_deleted',pk)
+        return Response(serializer.data)
 
 
 class userAPIView(APIView):
